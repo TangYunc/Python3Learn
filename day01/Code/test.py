@@ -389,7 +389,7 @@ else:
 
 
 
-n = int(input("请输入一个数："))	
+# n = int(input("请输入一个数："))	
 
  #打印树冠
  #方法一
@@ -401,11 +401,85 @@ n = int(input("请输入一个数："))
 # 	print(" " * (n - 1) + "*")
 
 #方法二
-for i in range(1,n + 1):
- 	starts = "*" * (2 * i - 1) #星号个数
- 	print(starts.center(2 * n - 1))
-for _ in range(n):
-	print(" " * (n - 1) + "*")	
+# for i in range(1,n + 1):
+#  	starts = "*" * (2 * i - 1) #星号个数
+#  	print(starts.center(2 * n - 1))
+# for _ in range(n):
+# 	print(" " * (n - 1) + "*")	
+
+
+
+#打印输入的数是否是素数（质数） 素数：2，3，5，7，11，13，17，19...
+# n = int(input("请输入一个数："))	
+# if n < 2:
+# 	print(n, "不是素数")
+# else:
+# 	for i in range(2, n):
+# 		if n % i == 0:
+# 			print(n, "不是素数")
+# 			break
+# 	else: #循环结束，不能再获取数据时
+# 		print(n, "是素数")		
+# type(n)
+
+
+
+
+L = [3.1, 3.2]
+t = (1,2,L)
+print(t)
+L[0] = 3.14
+print(t)
+# t[0] = 1.2#元组不能改变不可变数据
+# print(t)
+
+
+
+
+
+# d = {"0": "周日", "1": "周一", "2": "周二", "3": "周三", "4": "周四", "5": "周五", "6": "周六", "日": "周日", "一": "周一", "二": "周二", "三": "周三", "四": "周四", "五": "周五", "六": "周六"}
+# while True:
+# 	s = input("请输入星期的内容：")
+# 	if not s:#当用户输入空字符串时结束输入
+# 		break
+# 	if s in d:#判断s是否是d的键
+# 		print("你输入的是：", d[s])
+# 	else:
+# 		print("你输入不正确，请重新输入～")	
+
+
+
+
+# L = ["abc", "defoo", "g"]
+# value = [3, 5, 1]		
+# d = {x: len(x) for x in L}
+# print(d)
+
+
+# no = [1001, 1002, 1003, 1004]
+# names = ["Tom", "Jerry", "Speck", "Tyke"]
+# d = {no[x]: names[x] for x in range(len(no))}
+# print(d)
+
+
+
+s1 = {1, 2, 3}
+s2 = {2, 3, 4}
+s3 = {1, 2}
+print(s1 & s2)#交集
+print(s1 | s2)#并集
+print(s1 - s2, s2 - s1)#补集
+print(s1 ^ s2)#两个集合的对称补集
+print(s1 > s3)#超集
+print(s3 < s1)#子集
+
+
+
+
+
+
+
+
 
 
 
