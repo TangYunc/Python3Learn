@@ -97,15 +97,24 @@ for x in L:
 	print(x)
 
 		
-
+# 3.打印人员信息
 class Human:
  	"""docstring for ClassName"""
+ 	total_count = 0
  	def __init__(self, n, a ,addr='未填写'):
  		super(Human, self).__init__()
  		self.name = n
  		self.age = a
  		self.address = addr
+ 		self.__class__.total_count += 1
+
+ 	def __del__(self):
+ 		self.__class__.total_count -= 1
  	
+ 	@classmethod
+ 	def get_human_count(cls):
+ 		return cls.total_count #返回总人数
+ 		
  	def show_info(self):
  		print(self.name, self.age, '岁', '家住', self.address)
  	
@@ -135,8 +144,27 @@ def main():
 		h.update_age()
 	for h in docs:
 		h.show_info()	
+
+def main1():
+	docs = input_human()
+	print('当前的总人数是：', Human.get_human_count())
+	docs += input_human()
+	print('当前的总人数是：', Human.get_human_count())
 		 	
-main()		 			 	
+# main()
+main1()		
+
+
+# 4.数组插入元素到头部
+class MyList(list):
+ 	def insert_head(self, element):
+ 		self.insert(0, element)
+
+myl = MyList(range(3, 6))
+print(myl)
+myl.insert_head(2)
+print(myl)
+
 		    	   
 
 
