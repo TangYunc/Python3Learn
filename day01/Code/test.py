@@ -463,15 +463,52 @@ print(t)
 
 
 
-s1 = {1, 2, 3}
-s2 = {2, 3, 4}
-s3 = {1, 2}
-print(s1 & s2)#交集
-print(s1 | s2)#并集
-print(s1 - s2, s2 - s1)#补集
-print(s1 ^ s2)#两个集合的对称补集
-print(s1 > s3)#超集
-print(s3 < s1)#子集
+# s1 = {1, 2, 3}
+# s2 = {2, 3, 4}
+# s3 = {1, 2}
+# print(s1 & s2)#交集
+# print(s1 | s2)#并集
+# print(s1 - s2, s2 - s1)#补集
+# print(s1 ^ s2)#两个集合的对称补集
+# print(s1 > s3)#超集
+# print(s3 < s1)#子集
+
+
+# s = input("请输入一个字符串：")
+# 方法一集合
+# char_set = set(s)
+# for c in char_set:
+# 	print(c, end = " ")
+# else:
+# 	print()	
+
+# 方法二列表
+# L = []
+# for c in s:
+# 	if c not in L:
+# 		L.append(c)
+# print(L)
+
+
+
+
+
+# 方法一集合
+# char_set = set(s)
+# for c in char_set:
+# 	print(c, ":", s.count(c), "次")
+
+
+# 方法二字典，创建一个控字典，字典的键为字符，值为重复次数
+# d = {}
+# for c in s:
+# 	if c in d:
+# 		d[c] += 1
+# 	else:
+# 		d[c] = 1
+# print(d)
+# for k in d:
+# 	print(k, ":", d[k], "次")
 
 
 
@@ -481,6 +518,71 @@ print(s3 < s1)#子集
 
 
 
+
+
+#函数
+
+# def mysum(x, y):
+# 	print(x + y)
+
+# mysum(10, 5)
+
+
+# def print_even(n):
+# 		for x in range(1, n):
+# 			if x % 2 == 0:
+# 				print(x)
+
+# print_even(9)				
+
+
+# # 方法一
+# def input_number():
+	
+# 	L1 = []
+# 	while True:
+# 		s = int(input("请输入一个数："))
+# 		if s < 0:
+# 			break
+# 		else:
+# 			L1.append(s)
+# 	return L1
+
+# # 方法二
+# def input_number():
+	
+# 	L1 = []
+# 	while True:
+# 		s = int(input("请输入一个数："))
+# 		if s < 0:
+# 			return L1
+# 		else:
+# 			L1.append(s)
+# 	return L1				
+
+# L = input_number()
+# print("您输入的最大数是：", max(L))
+# print("您输入的这些数和是：", sum(L))
+
+
+# def fn(a, b, *args, c, **kwargs):
+# 	pass
+# fn(100, 200, 300, 400, *"AB", **{"d": "D"}, c = 100)
+
+
+
+def  goodbye(L):
+	for x in L:
+		print("再见：", x)
+def hello(L):
+	for x in L:
+		print("欢迎：", x)
+def fx(fn, L):
+	print("fx被调用")
+	fn(L)
+
+fx(hello, ["Tom", "Jerry", "Speck"])	
+fx(goodbye, ["小李", "小张"])
 
 
 
