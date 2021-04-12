@@ -62,6 +62,10 @@ class MyList():
 	#getitem,setitem重载
 	def __getitem__(self, i):
 		print("__getitem__方法被调用")
+		if type(i) is slice:
+			print("正在进行切片操作")
+		elif type(i) is int:
+			print("正在进行索引操作")
 		return self.data[i]
 	def __setitem__(self, i, v):
 		print("__setitem__方法被调用")
@@ -80,6 +84,9 @@ print("id(L6) = ", id(L6))
 L6 += L2
 print("L6 = ", L6)
 print("id(L6) = ", id(L6))
+
+L7 = MyList([1, -2, 3, -4, 5])
+print(L1[::2])
 
 
 
