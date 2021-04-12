@@ -45,12 +45,21 @@ class MyList():
 		print("__mul__方法被调用")
 		obj = MyList(self.data * rhs)
 		return obj
+
+	def __rmul__(self, lhs):
+		print("__rmul__方法被调用, lhs=", lhs)
+		obj = MyList(self.data * lhs)
+		return obj
+
 L1 = MyList([1,2,3])
 L2 = MyList(range(4,7))
 L3 = L1 + L2
 print('L3 = ' , L3) # MyList([1,2,3,4,5,6])
 L4 = L1 * 2 #实现乘法运算
 print('L4 = ', L4) # MyList([1,2,3,1,2,3])
+L5 = 2 * L1
+print(L5)
+
 
 
 
