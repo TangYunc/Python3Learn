@@ -47,6 +47,46 @@ print(a.myadd(300, 400))
 
 
 
+# 对象转字符串函数重写
+class MyNumber:
+	"""docstring for MyNumber """
+	def __init__(self, value):
+	 	self.data = value
+	
+	def __str__(self):
+		return '数字：%d' % self.data
+
+n1 = MyNumber(100)		
+print(str(n1))
+print(n1)
+print(repr(n1)) #调用n1.__repr__()方法
+
+
+
+class MyNumber1:
+
+	def __init__(self, v):
+		self.data = v
+	
+	def __repr__(self):
+		return 'MyNumber1(%d)' % self.data
+
+	def __int__(self):
+		return int(self.data)
+
+n2 = MyNumber1(100)
+print('n1 = ', n1)
+print(int(n2))				
+
+
+
+
+
+
+
+
+
+
 
 
 
