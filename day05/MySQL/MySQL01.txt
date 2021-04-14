@@ -42,18 +42,15 @@ MySQL的安装
 		（3）库名具有唯一性
 		（4）不能使用特殊字符和MySQL关键字
 	4.表的管理(表的命名规则同库的命名规则)
-		(1)创建表（指定字符集）
-			create table 表名(
-			字段名 数据类型,
-			字段名 数据类型,
-			... ...
-			)
-		(2)查看创建表的语句（字符集）
-			show crate table 表名;
-		(3)查看表结构
-			desc 表名;
-		(4)删除表
-			drop table 表名;
+		(1)创建表（指定字符集）create table 表名(
+									字段名 数据类型,
+									字段名 数据类型,
+									... ...
+									)
+		(2)查看创建表的语句（字符集）(show crate table 表名;)
+		(3)查看表结构(desc 表名;)
+		(4)删除表(drop table 表名;)
+			
 	
 	5.注意
 		(1)所有的数据都是以稳健的形式存放子啊数据库目录下
@@ -150,8 +147,117 @@ MySQL的安装
 			alter table 表名 rename 新表名;
 
 
+11.字符类型的宽度和数值类型的宽度的区别
+	数值类型的宽度仅仅为显示宽度，只用于select查询显示，和占用的存储空间大小无关，可用zerofill查看效果
+	字符类型的宽度查过则无法存储
+
+12.where条件子句（配合查询，修改，删除操作）
+	语法格式（select * from 表名 where 条件;）	
+
+13.表记录管理
+	1.删除表记录
+		（1）delete from 表名 where 条件;（注意：delete语句后如果不加where 条件子句，会将表中所有的记录全部删除）
+	2.更新表记录
+		（1）update 表名 set 字段名1=值1，字段名2=值2,...where条件;（注意：update语句后如果不加where条件子句会将表中所有记录全部更改）
+
+14.运算符操作
+	1.数值比较&字符比较
+	2.逻辑比较：and，or
+	3.范围内比较
+		（1）运算符 between and, in, not in
+		（2）语法 between 值1 and 值2    in/not in（值1，值2，...,值N）
+	4.匹配空，非空
+		（1）空：is null
+		（2）非空：is not null
+		（3）注意：null 空值，必须用 is 或者 is not 去匹配
+				"" 空字符串，用 = 或者 != 去匹配	
+	5.模糊比较
+		（1）where 字段名 like 表达式;
+		（2）表达式（NULL不会被统计）
+			_:匹配单个字符
+			%:匹配0到多个字符		
+	6.正则匹配查询 regexp （select ... where 字段名 regexp '正则表达式';）
+		（1）where 字段名 regexp '正则表达式'	
+		（2）正则表达式符号
+			^: 以...开头
+			$: 以...结尾
+			.: 匹配任意一个字符
+			[]: 包含...内容
+				[0-9]:匹配带数字的
+				[a-z ]:匹配带小写字母的
+				[A-Z]:
+			*: 星号前面的字符出现0个或者多次
 
 
+15.SQL查询
+	1.总结（执行顺序）
+		(3)select ... 聚合函数 from 表名
+		(1)where ...
+		(2)group by ...
+		(4)having ...
+		(5)order by ...
+		(6)limit ...
+	2.order by
+		作用：给查询的结果进行排序
+		语法格式：order by 字段名 排序方式
+		排序方式：
+			ASC(默认): 升序 select * from tname order by price asc; 
+				DESC: 降序
+	3.limit（永远放在SQL语句的最后写）			
+		作用：限制显示查询记录的个数
+		用法：
+			limit n: --->显示n条记录
+			limit m,n: --->从第（m+1）条开始，显示n条记录
+	4.聚合函数
+		分类
+			avg(字段名)：求字段的平均值
+			sum(字段名)：求和
+			max(字段名)：求最大值（select max(price) as p from list）
+			min(字段名)：求最小值
+			count(字段名)：统计该字段记录的个数(select count(id), count(name) from list)
+	5.group by（先分组，在聚合）
+		作用：给查询的结果进行分组
+		select name from list group by name;
+		注意：group by 之后的字段名必须要为select之后的字段名
+			如果select之后的字段名在group by语句之后，则必须要对该字段进行聚合处理（聚合函数）
+	6.having
+		作用：对查询的结果进行进一步筛选
+		having语句通常与group by语句联合使用，用来过滤由group by语句返回的记录集
+		having语句的存在弥补了where条件子句不能与聚合函数联合使用的不足，where操作的是表中实际存在的字段，having操作的是聚合函数生成的显示列
+	7.distinct
+		作用：不显示 字段的重复值
+		注意：distinct处理的是distinct和from之间的所有字段，所有字段值必须完全相同才可以去重
+			distinct不能对任何字段做聚合处理
+	8.查询表记录时可以做数学运算
+		运算符：+，-，*，/，% （selectd name, price * 10 as totle） from list;）
+
+16.约束
+	1.作用
+		为了保证数据的完整性，一致性，有效性，可以限制无效的数据插入到数据表中
+	2.约束分类
+		（1）默认约束（default）
+			作用 在插入记录时，如果不给改字段赋值，则使用默认值
+			格式（字段名 数据类型 default 默认值,	）
+		（2）非空约束
+			作用：不允许该字段的值有空值NULL记录
+			格式 (字段名 数据类型 not null,)
+
+17.索引
+	1.定义：对数据库中表的一列或者多列的值进行排序的一种结构（MySQL中索引用Btree方式）
+	2.索引的优点：可以加快数据的检索速度
+			缺点：当对表中的数据进行增加，修改，删除的时候，索引需要动态维护，降低了数据的维护速度
+				索引需要攒局物理存储空间（数据库目录/var/lib/mysql）		
+	示例
+		(1)运行一个数据量很大的文件，插入100万条记录
+		(2)开启性能分析
+			show variables like "%pro%"	
+			set profiling = 1
+		(3)执行查询语句（select name from t1 where name="lucy99999";）
+		(4)查看性能分析结果（show profiles;）
+		(5)在name字段创建索引（create index name on t1(name);）
+		(6)执行查询语句（select name from t1 where name="lucy99999";）
+		(7)查看性能分析结果（show profiles;）
+		(8)关闭性能分析（set profiling = 0;）
 
 
 
