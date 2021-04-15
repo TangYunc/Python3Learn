@@ -13,9 +13,13 @@ print("fetchone的结果为",data)
 
 data2 = cursor.fetchmany(2)
 print("fetchmany(2)的结果为",data2)
+for i in data2:
+	print(i)
 
 data3 = cursor.fetchall()
 print("fetchall()的结果为",data3)
+for i in data3:
+	print(i)
 
 #3.使用游标对象的方法操作数据库
 cursor.execute("insert into sheng values(1,20000,\'四川省');")
