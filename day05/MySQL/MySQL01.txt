@@ -415,9 +415,111 @@ MySQL的安装
 			浏览模式-->a(插入模式)-->esc(浏览模式)-->shift + :(命令行模式)-->:wq(保存并退出)
 		(4)重启mysql服务(/etc/init.d/mysql restart)
 	2.添加授权用户
+		（1）使用root用户连接到服务器（mysql -uroot -p123456）
+		（2）添加新的授权用户（create user "用户名"@"IP地址" identified by "密码";）
+			create user "tyc"@"%" identified by "1122";
+			IP地址的表示方式：
+				%表示拥护可以从任何地址链接到服务器
+				localhost用户只能从本地连接
+				指定一个IP表示用户只能从此IP连接到服务器
 	3.给用户授权
+		grant 权限列表 on 库.表 to "用户名"@"IP地址" with grant option;
+		grant all privileges on *.* to "tiger"@"%" with grant option;
+		权限列表：select, update, delete, insert
+	4.删除授权用户
+		drop user "用户名"@"IP地址";
+		drop user "tiger"@"%";
+26.数据备份（mysqldump,在Linux终端中操作）
+	1.命令格式	
+		mysqldump -uroot -p 源库名 > 路径/xxx.sql
+	2.源库名的表示方式
+		--all-databases 备份所有库
+		库名            备份单个库
+		-B 库1 库2 ...  备份多个库
+		库名 表1 表2 ... 备份指定库	
 
+27.数据恢复
+	1.命令格式（mysql -u用户名 -p 目标库名 < 路径/xxx.sql）
+	2.示例
+		（1）先备份库（mysqldump -uroot -p db2 > db2.sql）
+		（2）删除库(drop database db2;)
+		（3）创建空库(create database db2 default charset-utf8;)
+		（4）恢复命令(mysql -uroot -p db2 < db2.sql)		
+	3.备份类型
+		完全备份：mysqldump
+		增量备份: binlog日志，xbackup工具
+	4.从所有库的备份文件中恢复某一个库(--one-database)
+		mysql -u用户名 -p --one-database 目标库名 < all_mysql.sql
+		注意：
+			1.恢复库时库中新增的表不会删除
+			2.恢复时必须先创建空库
 
+28.事务和事务回滚
+	1.定义：一件事从开始发生到借宿的整个过程
+	2.作用：确保数据的一致性
+	3.事务和事务回滚的作用
+		（1）mysql中默认sql语句会自动commit到数据库
+			show variables like "autocommit";
+		（2）事务应用
+			开启事务（mysql? start transaction;）
+			终止事务（mysql? commit;  或者mysql? rollback;）
+		（3）注意：事务回滚rollback只针对于对表记录的操作，增，删，改，对创建库，创建表的操作无效
+
+29.存储引擎
+	1.定义：用来处理表的处理器
+	2.存储引擎基本操作
+		（1）查看已有表的存储引擎（show create table 表名;）
+		（2）创建表时指定存储引擎（create table 表名(...)engine=myisam）
+		（3）查看所有表的存储引擎（mysql>show engines;）
+	3.工作中常用的存储引擎（innodb myisam）
+	4.常用存储引擎特点		
+		(1)innodb特点
+			共享空间：表名.frm 表结构  表名.ibd 表记录&索引信息
+			支持行级锁
+		(2)myisam特点
+			独享表空间： 表名.frm 表结构  表名.myd 表记录  表名.myi 索引信息
+			支持表级锁
+	5.锁
+		（1）加锁的目的：解决客户端并发访问的冲突问题
+		（2）锁类型：读锁（select）共享锁。加读锁之后不能更改表中内容，但可以进行查询
+				   解锁（insert,update,delete）互斥锁，排他锁
+		（3）锁粒度：表级锁
+				   行级锁
+				   ###操作完成后会自动释放锁
+	6.如何决定使用哪种存储引擎
+		（1）执行查询操作多的表使用myisam存储引擎(使用innodb浪费资源)
+		（2）执行写操作比较多的表使用innodb存储引擎
+	7.如何更改表的默认存储引擎
+		（1）sudo -i
+		（2）cd /etc/mysql/mysql.conf.d/
+		（3）vi mysqld.cnf
+			[mysqld]
+			default-storage-engine = myisam
+		（4）/etc/init.d/mysql restart
+	8.memory存储引擎
+		memory：表记录存储在内存中
+		表名.frm表结构 ##服务器重启之后表结构在，表记录都消失
+
+30.MySQL调优
+	1.选择合适的存储引擎	
+		（1）执行查询操作多的表使用myisam存储引擎(使用innodb浪费资源)
+		（2）执行写操作比较多的表使用innodb存储引擎
+	2.SQL语句调优（尽量避免全表扫描）
+		（1）在select where order by常涉及到的字段建立索引
+		（2）where子句中不使用 !=,否则将放弃使用索引进行全表扫描
+		（3）尽量避免用NULL值判断，否则会全表扫描
+		（4）尽量避免or来连接条件，导致全表扫描
+				示例：
+				优化前： select id from t1 where id = 10 or id = 20;
+				优化后： select id from t1 where id = 10 
+						union all
+						select id from t1 where id = 20 
+					
+		（5）模糊查询中尽量使用前置%，否则导致全表扫描
+				示例：
+					select id from ti where name like "a%"
+		（6）尽量避免in 和 not in,	否则导致全表扫描
+		（7）尽量避免使用select * ...,要用具体的字段列表代替*，不要返回用不到的字段
 
 
 
