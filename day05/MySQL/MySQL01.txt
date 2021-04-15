@@ -407,6 +407,17 @@ MySQL的安装
 	1.select 字段名列表from表名列表; #笛卡尔积
 	2.select 字段名列表from表名列表 where 条件; 等同与内连接inner join
 
+25.MySQL用户账户管理
+	1.开启MySQL远程连接
+		(1)获取root权限（sudo -i）
+		(2)cd到配置文件所在路径（cd /etc/mysql/mysql.conf.d/）
+		(3)vi mysqld.cnf #bind-address = 127.0.1
+			浏览模式-->a(插入模式)-->esc(浏览模式)-->shift + :(命令行模式)-->:wq(保存并退出)
+		(4)重启mysql服务(/etc/init.d/mysql restart)
+	2.添加授权用户
+	3.给用户授权
+
+
 
 
 
