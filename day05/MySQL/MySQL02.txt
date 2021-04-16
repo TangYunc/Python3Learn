@@ -1,0 +1,54 @@
+1.Python数据库编程
+	1.python数据库接口（Python DB-API）
+		（1）为开发人员提供的数据库应用编程接口
+		（2）支持的数据库服务软件mysql,Oracle,SQL_Server,mongodb..
+		（3）python提供的操作mysql模块
+			python3: pymysql
+			python2: MySQLdb
+		（4）pymysql模块使用流程
+			建立数据库连接
+			创建游标对象
+			使用游标对象的方法操作数据库
+			提交commit
+			关闭游标对象
+			关闭数据库连接
+		(5)建立数据库连接
+				语法格式：对象名 = pymysql,connect("主机地址", "用户名", "密码", "库名",charset="utf8")
+				connect连接对象支持的方法
+					cursor()创建一个游标对象db.cursor()
+					commit()提交到数据库执行(表记录增删改)
+					rollback()回滚
+					close()关闭数据库连接
+				游标对象支持的方法
+					execute("SQL命令")执行SQL命令
+					fetchone()取得结果集的第一条记录
+					fetchmany(n)取得结果集的n条记录
+					fetchall()取得结果集的所有记录
+					close()关闭游标对象
+
+2.Mysql workbench(图形化界面管理工具)
+
+3.ER模型 & ER图
+	1.定义：ER模型即 实体 - 关系 模型
+			ER图即 实体关系图
+	2.三个概念
+		（1）实体
+		（2）属性
+		（3）关系
+			定义：实体之间的关系
+			分类：一对一关系（1:1）
+				 一对多（1:n）
+				 多对多（m:n）
+		（4）ER图的绘制
+			矩形框代表实体，菱形框代表关系，椭圆形代表属性
+
+
+
+
+
+
+
+
+
+
+
